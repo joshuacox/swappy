@@ -16,19 +16,19 @@ e.g. by default this is the same as the more verbose and explicit:
 swappy init /swapfile 8G 3
 ```
 
-Or specify a `PATH`
+Or specify just a `PATH`
 
 ```
 swappy init $PATH
 ```
 
-And a `SIZE`
+And add in `SIZE`
 
 ```
 swappy init $PATH $SIZE
 ```
 
-With a priority:
+finally with a priority:
 
 ```
 swappy init $PATH $SIZE $PRIORITY
