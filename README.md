@@ -2,7 +2,7 @@
 
 Create a swapfile PDQ
 
-###Usage:
+### Usage:
 
 To create a swapfile use the `init` subcommand
 
