@@ -1,0 +1,9 @@
+#!/bin/sh
+TMP_DIR=$(mktemp -d --suffix='.swappy')
+
+cd $TMP_DIR
+git clone --depth=1 https://github.com/joshuacox/swappy.git
+cd swappy
+sudo make install
+cd
+rm -Rf $TMP_DIR

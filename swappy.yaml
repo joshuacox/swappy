@@ -1,0 +1,4 @@
+- name: dockersupport
+  hosts: swappy
+  tasks:
+  - script: bootstrap
