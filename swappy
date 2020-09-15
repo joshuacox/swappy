@@ -2,7 +2,8 @@
 
 init() {
   SWAPFILE=/swapfile
-  SWAPSIZE="8G"
+  # Given in megabytes
+  SWAPSIZE="1024"
   SWAPPRIORITY=1
     ## if we are passing the version
     if [[ ! -z "$1" ]]; then
@@ -14,11 +15,13 @@ init() {
     if [[ ! -z "$3" ]]; then
         local SWAPPRIORITY=$3
     fi
-  sudo fallocate -l $SWAPSIZE $SWAPFILE
+  #sudo fallocate -l $SWAPSIZE $SWAPFILE
+  sudo dd if=/dev/zero of=$SWAPFILE bs=1M count=$SWAPSIZE status=progress
   sudo chown root. $SWAPFILE
   sudo chmod 0600 $SWAPFILE
   sudo mkswap $SWAPFILE
   sudo swapon -p $SWAPPRIORITY $SWAPFILE
+  sudo swapon
   echo "rm -f $SWAPFILE"|sudo tee -a /root/deleteswaps.sh &> /dev/null
 }
 usage() {
@@ -26,10 +29,10 @@ usage() {
     echo "Usage:"
     echo "swappy init                     - setup /swapfile"
     echo 'swappy init $PATH           - setup swap path'
-    echo 'swappy init $PATH $SIZE - setup swap with this path with this swap size'
+    echo 'swappy init $PATH $SIZE - setup swap with this path with this swap size (in megabytes)'
     echo 'swappy init $PATH $SIZE $PRIORITY - setup swap with this path with this swap size and this priority'
     echo "e.g. by default this is:"
-    echo -e "\nswappy init /swapfile 8G 3\n"
+    echo -e "\nswappy init /swapfile 1024 3\n"
 }
 
 list() {
@@ -48,7 +51,6 @@ main() {
     list
     elif [[ $cmd == "init" ]]; then
         init "$2" "$3" "$4"
-    list
     else
         usage
     fi
